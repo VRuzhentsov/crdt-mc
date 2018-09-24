@@ -18,7 +18,7 @@ function mine(difficulty) {
 
 }
 
-function calcHash(block : Block): string {
+export function calcHash(block : Block): string {
   return SHA256([
     block.timestamp,
     block.hash,
@@ -30,7 +30,7 @@ function calcHash(block : Block): string {
 }
 
 
-let genesis : Block = {
+export const genesis : Block = {
   timestamp: 1,
   hash: null,
   prevHash: null,

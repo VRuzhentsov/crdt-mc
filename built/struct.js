@@ -7,7 +7,7 @@ function mine(difficulty) {
 
 }
 
-function calcHash(block) {
+export function calcHash(block) {
   return SHA256([
     block.timestamp,
     block.hash,
@@ -19,7 +19,7 @@ function calcHash(block) {
 }
 
 
-let genesis = {
+export const genesis = {
   timestamp: 1,
   hash: null,
   prevHash: null,

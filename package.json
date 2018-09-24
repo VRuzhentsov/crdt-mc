@@ -19,7 +19,8 @@
     "flow": "flow",
     "flow:check": "flow check ./plumbing.js ./struct.js ./main.js",
     "flow:build": "flow-remove-types ./*.js -d ./built/ --all --pretty",
-    "test": "npm run flow:build && babel-node --presets=es2015 built/main.js"
+    "upstream": "npm run flow:build && babel-node --presets=es2015 built/main.js upstream",
+    "downstream": "npm run flow:build && babel-node --presets=es2015 built/main.js downstream"
   },
   "keywords": [],
   "author": "",
