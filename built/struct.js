@@ -3,27 +3,40 @@ import {SHA256} from "crypto-js";
 
 
 
-function mine(difficulty) {
 
+export function hash(data ) {
+  return SHA256(data.map(s => s.toString()).join("/")).toString()
 }
 
-export function calcHash(block) {
-  return SHA256([
-    block.timestamp,
-    block.hash,
-    block.prevHash,
-    block.nonce,
-    block.index,
-    JSON.stringify(block.data)
-  ].map(p => p != null ? p.toString() : "").join("")).toString();
+function transactionHash(t) {
+  if (!t) return "";
+  return hash([t.timestamp, t.author, t.message])
 }
 
+function merkleTreeHashes(txs) {
+  let hashes = [];
 
-export const genesis = {
-  timestamp: 1,
-  hash: null,
+  // calc level1 merkle tree
+  for (var i = 0; i < txs.length; i += 2) {
+    let left = transactionHash(txs[i]), right = transactionHash(txs[i + 1]);
+    hashes.push(hash([left, right]));
+  }
+  return hashes;
+}
+
+export function blockHash(block) {
+  return hash([block.prevHash, merkleTreeHashes(block.txs).join("")])
+}
+
+export function addBlock(bc, block) {
+  block.hash = blockHash(block)
+  bc.chain.push(block);
+  return bc;
+}
+
+export const Genesis = {
+  hash: "",
   prevHash: null,
-  nonce: 0,
   index: 0,
-  data : {amount: 0}
+  txs: []
 };
