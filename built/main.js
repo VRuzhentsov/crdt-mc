@@ -1,6 +1,6 @@
 // 
 
-import {findIp, syncCommand, syncState, listenCommand} from "./plumbing.js";
+import {findIp, syncCommand, syncState, listenCommand, listenState} from "./plumbing.js";
 
 import {chain} from "./commands.js";
 import {hash} from "./tools.js";
@@ -31,7 +31,11 @@ function loop () {
 
 if (options.upstream) {
   console.log(" ** Listening updates ...");
-  listenCommand(msg => console.log("MESSAGE", msg));
+  listenState(msg => {
+    if (chain.verify(msg)) {
+      blockchain = msg;
+    }
+  });
 }
 
 if (options.downstream) {

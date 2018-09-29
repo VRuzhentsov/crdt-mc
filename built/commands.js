@@ -31,7 +31,6 @@ function verify(bc) {
     let block = bc.chain[i];
     if (blockHash(block) !== block.hash) {
       console.log("FATAL: block #" + block.index + " is corrupted");
-      process.exit(1)
       return false;
     }
   }

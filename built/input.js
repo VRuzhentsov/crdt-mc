@@ -12,7 +12,13 @@ export function commit (onMessage, onCommit) {
 export function chat (onMessage, onCommit) {
   var message = createInterface(process.stdin, process.stdout);
   message.question("message > ", (line) => {
-    onMessage(line);
-    message.close();
-    commit(onMessage, onCommit); });
+    if (line.length > 0) {
+      onMessage(line);
+      message.close();
+      commit(onMessage, onCommit);
+    } else {
+      message.close();
+      chat(onMessage, onCommit);
+    }
+  });
 }

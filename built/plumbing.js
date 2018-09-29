@@ -14,9 +14,9 @@ const pusherConfig = {
   encrypted: true
 };
 
-Pusher.log = (msg) => {
-  console.log(msg);
-};
+// Pusher.log = (msg) => {
+//   console.log(msg);
+// };
 
 export const downstreamFactory = new Pusher(pusherConfig.key, pusherConfig);
 
@@ -27,6 +27,7 @@ export const downstream = downstreamFactory.subscribe(channelName);
 export const syncCommand = (payload) => upstream.trigger(channelName, eventCommand, payload);
 export const syncState = (payload) => upstream.trigger(channelName, eventState, payload);
 export const listenCommand = (fn) => downstream.bind(eventCommand, fn);
+export const listenState = (fn) => downstream.bind(eventState, fn);
 
 export function findIp () {
   let ifaces = os.networkInterfaces();
