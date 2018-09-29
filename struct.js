@@ -1,6 +1,5 @@
 
 type Transaction = {
-  hash: string,
   timestamp : number,
   author : string,
   message : string

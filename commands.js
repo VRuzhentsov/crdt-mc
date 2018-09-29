@@ -16,7 +16,6 @@ function transaction(author : string, message : string) : Transaction {
 
 function block(bc : Blockchain, txs : Array<Transaction>):  Blockchain {
   let prev = bc.chain[bc.chain.length - 1];
-  let ts = Date.now();
   let block : Block = {
     index: bc.chain.length,
     txs: txs,

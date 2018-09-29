@@ -16,7 +16,6 @@ function transaction(author, message) {
 
 function block(bc, txs) {
   let prev = bc.chain[bc.chain.length - 1];
-  let ts = Date.now();
   let block = {
     index: bc.chain.length,
     txs: txs,

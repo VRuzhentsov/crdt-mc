@@ -1,6 +1,6 @@
 // @flow
 
-import {findIp, syncCommand, listenCommand} from "./plumbing.js";
+import {findIp, syncCommand, syncState, listenCommand} from "./plumbing.js";
 
 import {chain} from "./commands.js";
 import {hash} from "./tools.js";
@@ -24,7 +24,7 @@ function loop () {
 	 console.log("Commiting transactions: " + txs.length);
 	 blockchain = chain.block(blockchain, txs);
 	 txs = [];
-	 syncCommand({"data": blockchain});
+	 syncState(blockchain);
 	 loop();
        });
 }
@@ -40,10 +40,14 @@ if (options.downstream) {
 
 
 
-// console.log(blockchain);
-
+// // console.log(blockchain);
+// let blockchain = chain.init();
+// let tx1 = chain.transaction("max", "hey 0");
+// let tx2 = chain.transaction("max", "hey 1");
+// blockchain = chain.block(blockchain, [tx1, tx2]);
 // let tx3 = chain.transaction("max", "hey 2");
 // blockchain = chain.block(blockchain, [tx3]);
+// //blockchain.chain[1].txs[1].author = "not max";
 // console.log("Is blockchain valid?")
 // chain.verify(blockchain);
-// console.log(blockchain);
+// console.log(JSON.stringify(blockchain, null, 2));
