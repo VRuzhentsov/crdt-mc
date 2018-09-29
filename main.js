@@ -24,7 +24,7 @@ function loop () {
 	 console.log("Commiting transactions: " + txs.length);
 	 blockchain = chain.block(blockchain, txs);
 	 txs = [];
-	 syncState(blockchain);
+	 syncCommand(block.chain[block.chain.length - 1]);
 	 loop();
        });
 }
@@ -35,6 +35,14 @@ if (options.upstream) {
     if (chain.verify(msg)) {
       console.log("OK: blockchain state has been updated");
       blockchain = msg;
+      let messages = [];
+      for (var i = 0; i < blockchain.chain.length; i++) {
+	for (var j = 0; j < blockchain.chain[i].txs.length; j++) {
+	  let tx = blockchain.chain[i].txs[j];
+	  messages.push([tx.timestamp, tx.author.slice(-6), tx.message]);
+	}
+      }
+      console.table(messages);
     }
   });
 }
