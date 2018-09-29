@@ -1,4 +1,5 @@
-import {hash, Genesis, Block, Transaction, Blockchain, addBlock, blockHash} from "./struct.js";
+import {Genesis, Block, Transaction, Blockchain} from "./struct.js";
+import {addBlock, blockHash} from "./tools.js";
 
 function init() {
   return {chain: [Genesis]};

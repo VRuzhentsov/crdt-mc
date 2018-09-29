@@ -1,8 +1,13 @@
 // 
 
-import {syncCommand, listenCommand} from "./plumbing.js";
+import {findIp, syncCommand, listenCommand} from "./plumbing.js";
 
 import {chain} from "./commands.js";
+import {hash} from "./tools.js";
+
+let nodeId = hash(findIp());
+
+console.log("Your nodeId: " + nodeId);
 
 const cmd = process.argv[process.argv.length - 1];
 const options = {
@@ -11,9 +16,7 @@ const options = {
 };
 
 let blockchain = chain.init();
-console.log(blockchain);
-
-let tx1 = chain.transaction("max", "hey");
+let tx1 = chain.transaction(nodeId, "hey");
 let tx2 = chain.transaction("max", "hey2");
 
 blockchain = chain.block(blockchain, [tx1, tx2]);

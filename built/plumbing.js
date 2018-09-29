@@ -1,5 +1,6 @@
 import Pusher from 'pusher-js';
 import {default as PusherNotifier} from 'pusher';
+import os from "os";
 
 const channelName = 'CRDT-MC';
 const eventCommand = 'COMMAND';
@@ -26,3 +27,14 @@ export const downstream = downstreamFactory.subscribe(channelName);
 export const syncCommand = (payload) => upstream.trigger(channelName, eventCommand, payload);
 export const syncState = (payload) => upstream.trigger(channelName, eventState, payload);
 export const listenCommand = (fn) => downstream.bind(eventCommand, fn);
+
+export function findIp () {
+  let ifaces = os.networkInterfaces();
+  for (var ifname in ifaces) {
+    let iface = ifaces[ifname];
+    for (var i = 0; i < iface.length; i++) {
+      if ('IPv4' === iface[i].family && iface[i].internal === false)
+        return [ifname, iface[i].address];
+    }
+  }
+}
